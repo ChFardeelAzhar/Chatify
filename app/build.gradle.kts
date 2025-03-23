@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.chatify"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.chatify"
@@ -56,4 +56,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // google icons
+    implementation("androidx.compose.material:material-icons-extended:1.7.8")
 }
