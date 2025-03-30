@@ -1,4 +1,4 @@
-package com.example.chatify
+package com.example.chatify.screenUi
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,13 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.ViewModelProvider
-import com.example.chatify.screenUi.Chatify
-import com.example.chatify.screenUi.HomeScreenViewModel
+import com.example.chatify.screenUi.home.Chatify
 import com.example.chatify.ui.theme.ChatifyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
