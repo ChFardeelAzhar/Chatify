@@ -32,26 +32,6 @@ class HomeScreenViewModel @Inject constructor(
     fun sendMessage(userMessage: String) {
 
 
-        /*
-        viewModelScope.launch {
-
-
-            try {
-                val chat = generativeModel.startChat()
-                val response = chat.sendMessage(userMessage)
-                Log.d("AI_RESPONSE", "Response: ${response.text.toString()}")
-
-            } catch (e: Exception) {
-                Log.d("AI_RESPONSE", "Error : ${e.message.toString()}")
-
-            }
-
-
-        }
-
-
-         */
-
         _chatState.value = ResultState.Loading
         Log.d("API_KEY", "Using API Key: ${generativeModel.apiKey}")
 
@@ -62,30 +42,15 @@ class HomeScreenViewModel @Inject constructor(
 
             try {
 
-                /*
-                // Update chat state with user message
-                val updatedMessages = _chatMessages.value + ChatMessage(userMessage, true)
-                _chatMessages.value = updatedMessages
-
-                // Get AI response
-                val response = generativeModel.generateContent(userMessage ?: "hi")
-                val aiReply = response.text ?: "Sorry, I couldn't understand that."
-
-                // Update chat state with AI response
-                _chatMessages.value += ChatMessage(aiReply, false)
-
-
-                 */
-
                 val chat = generativeModel.startChat(
-//                    history = _chatMessages.value.map {
-//                        content(
-//
-//                            ) {
-//
-//                        }
-//                    }.toList()
+                    history = _chatMessages.value.map {
+                        content(role = if (it.isUser) "user" else "model") {  // Assign role
+                            text(it.message)
+                        }
+                    }
+
                 )
+
                 _chatMessages.value += ChatMessage(userMessage, true)
 
                 val chatResponse = chat.sendMessage(userMessage)
@@ -103,33 +68,5 @@ class HomeScreenViewModel @Inject constructor(
 
 
     }
-
-
-    /*
-    fun sendMessage(message: String) {
-
-        viewModelScope.launch {
-
-
-            try {
-                val chat = generativeModel.startChat()
-                val response = chat.sendMessage(message)
-
-                Log.d("AI_RESPONSE", "Response: ${response.text.toString()}")
-
-            } catch (e: Exception) {
-
-                Log.d("AI_RESPONSE", "Error : ${e.printStackTrace()}")
-
-            }
-
-
-
-
-        }
-    }
-
-
-     */
 
 }

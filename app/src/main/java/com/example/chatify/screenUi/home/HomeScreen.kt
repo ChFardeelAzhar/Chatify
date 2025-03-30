@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
@@ -31,12 +33,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.chatify.R
 import com.example.chatify.model.ChatMessage
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -133,13 +139,6 @@ fun Chatify(
 
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun Preview(modifier: Modifier = Modifier) {
-
-}
-
 @Composable
 fun ReplyBox(onSendClick: (String) -> Unit) {
 
@@ -196,17 +195,49 @@ fun SingleChatMessage(message: ChatMessage) {
             .fillMaxWidth(),
         contentAlignment = if (message.isUser) Alignment.CenterEnd else Alignment.CenterStart
     ) {
-        Text(
-            text = message.message,
+
+        Row(
             modifier = Modifier
-                .background(
-                    if (message.isUser) MaterialTheme.colorScheme.error.copy(alpha = .3f) else MaterialTheme.colorScheme.primary.copy(
-                        alpha = .3f
-                    ),
-                    shape = RoundedCornerShape(18.dp)
+                .fillMaxWidth()
+                .padding(
+                    start =
+                    if (message.isUser) 40.dp else 0.dp,
+                    end =
+                    if (!message.isUser) 40.dp else 0.dp,
+                ),
+            horizontalArrangement = if (message.isUser) Arrangement.End else Arrangement.Start
+        ) {
+
+
+            if (!message.isUser) {
+                Image(
+                    painter = painterResource(R.drawable.chatify),
+                    contentDescription = "Chatify",
+                    modifier = Modifier
+                        .size(30.dp)
+                        .clip(shape = CircleShape),
+                    contentScale = ContentScale.Fit
                 )
-                .padding(10.dp),
-            color = Color.White
-        )
+
+            }
+
+            Spacer(modifier = Modifier.size(5.dp))
+
+            Text(
+                text = message.message,
+                modifier = Modifier
+                    .background(
+                        if (message.isUser) MaterialTheme.colorScheme.error.copy(alpha = .3f) else MaterialTheme.colorScheme.primary.copy(
+                            alpha = .3f
+                        ),
+                        shape = RoundedCornerShape(18.dp)
+                    )
+                    .padding(10.dp),
+                color = MaterialTheme.colorScheme.onBackground
+            )
+
+        }
+
+
     }
 }
