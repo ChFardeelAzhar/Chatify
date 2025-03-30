@@ -52,10 +52,11 @@ class HomeScreenViewModel @Inject constructor(
                 )
 
                 _chatMessages.value += ChatMessage(userMessage, true)
+                _chatMessages.value += ChatMessage("Typing...", false)
 
                 val chatResponse = chat.sendMessage(userMessage)
+                _chatMessages.value = _chatMessages.value.dropLast(1)
 
-                _chatState.value = ResultState.Idle
                 _chatMessages.value += ChatMessage(
                     chatResponse.text ?: "Sorry, I couldn't understand that.", false
                 )
@@ -63,7 +64,10 @@ class HomeScreenViewModel @Inject constructor(
 
             } catch (e: Exception) {
                 Log.e("ChatApp", "Error: ${e.message}", e)
+                                _chatMessages.value = _chatMessages.value.dropLast(1)
                 _chatMessages.value += ChatMessage("Error: ${e.message}", false)
+
+
                 _chatState.value = ResultState.Idle
             }
 
