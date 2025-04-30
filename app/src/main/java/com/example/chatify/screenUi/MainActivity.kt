@@ -18,14 +18,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-//        val viewModel = ViewModelProvider(this)[HomeScreenViewModel::class.java]
-
         setContent {
             ChatifyTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Chatify(modifier = Modifier.padding(innerPadding),
-//                        viewModel = viewModel
-                    )
+                    Chatify(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
