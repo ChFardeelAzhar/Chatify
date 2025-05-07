@@ -31,15 +31,11 @@ class HomeScreenViewModel @Inject constructor(
     // Function to send user message and get AI response
     fun sendMessage(userMessage: String) {
 
-
         _chatState.value = ResultState.Loading
         Log.d("API_KEY", "Using API Key: ${generativeModel.apiKey}")
 
-
         // Ai Generated
         viewModelScope.launch {
-
-
             try {
 
                 val chat = generativeModel.startChat(
